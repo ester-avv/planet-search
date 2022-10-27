@@ -1,24 +1,13 @@
-import React, { useEffect, useState } from 'react';
-
-/* fetchApi(){
-    const url = 'https://swapi.dev/api/planets';
-} */
+import React, { useContext } from 'react';
+import planetsContext from '../Context/PlanetsContext';
+import Filters from './Filters';
 
 function Table() {
-  const [planetsList, setPlanetList] = useState([]);
-
-  useEffect(() => {
-    const getPlanets = async () => {
-      const endpoint = 'https://swapi.dev/api/planets';
-      const { results } = await fetch(endpoint).then((response) => response.json());
-      const filteredData = results.filter((e) => e !== e.residents);
-      setPlanetList(filteredData);
-    };
-    getPlanets();
-  }, []);
+  const { filteredPlanets } = useContext(planetsContext);
 
   return (
     <div>
+      <Filters />
       <table border="1">
         <thead>
           <tr>
@@ -40,7 +29,7 @@ function Table() {
         </thead>
         <tbody>
           {
-            planetsList.map((e) => (
+            filteredPlanets.map((e) => (
               <tr key={ e.name }>
                 <td>
                   {e.name}
