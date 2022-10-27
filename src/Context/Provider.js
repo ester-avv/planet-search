@@ -1,11 +1,15 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 
 export default function Provider({ children }) {
   const [planetsList, setPlanetList] = useState([]);
-  const [nameFilter, setNameFilter] = useState('');
   const [filteredPlanets, setFilteredPlanets] = useState(planetsList);
+
+  const [nameFilter, setNameFilter] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [amount, setAmount] = useState(0);
 
   //  const handleText = ({ target: value }) => {
   //    setNameFilter(value);
@@ -28,6 +32,22 @@ export default function Provider({ children }) {
     filterByName();
   }, [nameFilter, planetsList]);
 
+  // Requisito 4 feito na mentoria com Joel e aluno Igor Arecippo
+
+  const handleClick = useCallback(() => {
+    const allFiltered = filteredPlanets.filter((p) => {
+      switch (comparison) {
+      case 'maior que':
+        return Number(p[column]) > Number(amount);
+      case 'menor que':
+        return Number(p[column]) < Number(amount);
+      default:
+        return Number(p[column]) === Number(amount);
+      }
+    });
+    setFilteredPlanets(allFiltered);
+  }, [column, filteredPlanets, amount, comparison]);
+
   const context = useMemo(() => ({
     planetsList,
     setPlanetList,
@@ -35,6 +55,13 @@ export default function Provider({ children }) {
     setNameFilter,
     filteredPlanets,
     setFilteredPlanets,
+    column,
+    setColumn,
+    amount,
+    setAmount,
+    comparison,
+    setComparison,
+    handleClick,
   }), [
     planetsList,
     setPlanetList,
@@ -42,6 +69,13 @@ export default function Provider({ children }) {
     setNameFilter,
     filteredPlanets,
     setFilteredPlanets,
+    column,
+    setColumn,
+    amount,
+    setAmount,
+    comparison,
+    setComparison,
+    handleClick,
   ]);
 
   return (
