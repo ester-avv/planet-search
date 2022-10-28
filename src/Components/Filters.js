@@ -6,7 +6,11 @@ export default function Filters() {
     handleClick,
     setColumn,
     setComparison,
-    setAmount } = useContext(planetsContext);
+    setAmount,
+    amount } = useContext(planetsContext);
+
+  /* amount = 0; */
+
   return (
     <form>
       <input
@@ -52,6 +56,7 @@ export default function Filters() {
         type="number"
         data-testid="value-filter"
         name="habitants"
+        value={ amount }
         onChange={ ({ target }) => { setAmount(target.value); } }
       />
       <button data-testid="button-filter" type="button" onClick={ handleClick }>
