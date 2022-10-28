@@ -59,10 +59,25 @@ it('Verifica filtros e tabela', async () => {
 
     userEvent.type(filterByName, 'oo');
     userEvent.selectOptions(filterByColumn,['rotation_period']);
-    userEvent.selectOptions(filterByComparison,['igual a']);
-    userEvent.type(filterByAmount, '23');
+    userEvent.selectOptions(filterByComparison,['maior que']);
+    userEvent.type(filterByAmount, '20');
+
+    userEvent.click(btnToFilter);
 
     const planetT = screen.getByText('Tatooine');
     expect(planetT).toBeInTheDocument();
+
+    const planetN = screen.getByText('Naboo');
+    expect(planetN).toBeInTheDocument();
+
+    userEvent.selectOptions(filterByColumn,['orbital_period']);
+    userEvent.selectOptions(filterByComparison,['menor que']);
+    userEvent.type(filterByAmount, '305');
+    userEvent.click(btnToFilter);
+
+    expect(planetT).toBeInTheDocument();
+  
+
+
 })
 })
