@@ -7,10 +7,11 @@ export default function Filters() {
     setColumn,
     setComparison,
     setAmount,
+    myFilters,
     amount } = useContext(planetsContext);
 
   /* amount = 0; */
-
+  /* console.log(myFilters); */
   return (
     <div>
       <span>
@@ -41,21 +42,28 @@ export default function Filters() {
           data-testid="column-filter"
           onChange={ ({ target }) => { setColumn(target.value); } }
         >
-          <option>
-            population
+          {
+            myFilters.map((f) => (
+              <option key={ `comparison${f}` }>
+                {f}
+              </option>
+            ))
+          }
+          {/* <option>
+            { myFilters[0] }
           </option>
           <option>
-            orbital_period
+            { myFilters[1] }
           </option>
           <option>
-            diameter
+            { myFilters[2] }
           </option>
           <option>
-            rotation_period
+            { myFilters[3] }
           </option>
           <option>
-            surface_water
-          </option>
+            { myFilters[4] }
+          </option> */}
         </select>
         <select
           data-testid="comparison-filter"

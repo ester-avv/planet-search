@@ -11,12 +11,17 @@ export default function Provider({ children }) {
   const [comparison, setComparison] = useState('maior que');
   const [amount, setAmount] = useState(0);
 
-  const objWithFilters = {
+  /*   const objWithFilters = {
     column,
     comparison,
     amount,
-  };
-  const [myFilters, setMyFilters] = useState(objWithFilters);
+  }; */
+  const myComparisons = ['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water'];
+  const [myFilters, setMyFilters] = useState(myComparisons);
 
   //  const handleText = ({ target: value }) => {
   //    setNameFilter(value);
@@ -53,7 +58,10 @@ export default function Provider({ children }) {
       }
     });
     setFilteredPlanets(allFiltered);
-  }, [column, filteredPlanets, amount, comparison]);
+    const appearingFilt = myFilters.filter((f) => f !== column);
+    setMyFilters(appearingFilt);
+    setColumn(myFilters[0]);
+  }, [column, filteredPlanets, amount, comparison, myFilters]);
 
   const context = useMemo(() => ({
     planetsList,
