@@ -11,6 +11,13 @@ export default function Provider({ children }) {
   const [comparison, setComparison] = useState('maior que');
   const [amount, setAmount] = useState(0);
 
+  const objWithFilters = {
+    column,
+    comparison,
+    amount,
+  };
+  const [myFilters, setMyFilters] = useState(objWithFilters);
+
   //  const handleText = ({ target: value }) => {
   //    setNameFilter(value);
   //  };
@@ -62,6 +69,8 @@ export default function Provider({ children }) {
     comparison,
     setComparison,
     handleClick,
+    myFilters,
+    setMyFilters,
   }), [
     planetsList,
     setPlanetList,
@@ -76,6 +85,8 @@ export default function Provider({ children }) {
     comparison,
     setComparison,
     handleClick,
+    myFilters,
+    setMyFilters,
   ]);
 
   return (
